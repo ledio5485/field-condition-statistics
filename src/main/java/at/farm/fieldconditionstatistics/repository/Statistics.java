@@ -4,12 +4,12 @@ public class Statistics {
 
     private final Double min;
     private final Double max;
-    private final Double average;
+    private final Double avg;
 
-    public Statistics(Double min, Double max, Double average) {
+    public Statistics(Double min, Double max, Double avg) {
         this.min = min;
         this.max = max;
-        this.average = average;
+        this.avg = avg;
     }
 
     public Double getMin() {
@@ -20,7 +20,7 @@ public class Statistics {
         return max;
     }
 
-    public Double getAverage() {
-        return average;
+    public Double getAvg() {
+        return avg;
     }
 }

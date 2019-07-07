@@ -10,7 +10,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -39,18 +40,16 @@ public class DBFieldConditionsRepositoryITest {
     }
 
     @Test
-    public void getStatistics() {
+    public void filter() {
         ZonedDateTime fixedZonedDateTime = ZonedDateTime.now(ZoneOffset.UTC);
-        ArrayList<FieldConditionsEntity> entities = Lists.list(
-                new FieldConditionsEntity(null, 0.4, fixedZonedDateTime),
-                new FieldConditionsEntity(null, 0.5, fixedZonedDateTime),
-                new FieldConditionsEntity(null, 0.6, fixedZonedDateTime)
-        );
-        sut.saveAll(entities);
+        FieldConditionsEntity entity1 = new FieldConditionsEntity(null, 0.4, fixedZonedDateTime);
+        FieldConditionsEntity entity2 = new FieldConditionsEntity(null, 0.5, fixedZonedDateTime);
+        FieldConditionsEntity entity3 = new FieldConditionsEntity(null, 0.6, fixedZonedDateTime);
+        sut.saveAll(Lists.list(entity1,entity2, entity3));
 
-        Statistics actual = sut.getStatistics(ZonedDateTime.from(fixedZonedDateTime).minusSeconds(5), fixedZonedDateTime);
+        List<FieldConditionsEntity> actual = sut.filter(ZonedDateTime.from(fixedZonedDateTime).minusSeconds(5), fixedZonedDateTime)
+                .collect(Collectors.toList());
 
-        Statistics expected = new Statistics(0.4, 0.6, 0.5);
-        assertThat(actual).isEqualToComparingFieldByFieldRecursively(expected);
+        assertThat(actual).containsExactlyInAnyOrder(entity1, entity2, entity3);
     }
 }

@@ -73,7 +73,7 @@ public class FieldConditionStatisticsControllerITest {
     }
 
     @Test
-    public void getFieldStatisticsOfCustomDateRange() {
+    public void getFieldStatisticsWithProvidedDateRange() {
         ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);
         ArrayList<FieldConditionsEntity> list = Lists.list(
                 new FieldConditionsEntity(null,0.3, now.minusDays(1)),

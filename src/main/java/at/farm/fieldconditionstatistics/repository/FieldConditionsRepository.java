@@ -1,9 +1,11 @@
 package at.farm.fieldconditionstatistics.repository;
 
 import java.time.ZonedDateTime;
+import java.util.stream.Stream;
 
 public interface FieldConditionsRepository {
+
     void add(FieldConditionsEntity fieldConditionsEntity);
 
-    Statistics getStatistics(ZonedDateTime from, ZonedDateTime to);
+    Stream<FieldConditionsEntity> filter(ZonedDateTime from, ZonedDateTime to);
 }

@@ -30,7 +30,7 @@ here is an example:
 SELECT 
        MIN(vegetation) AS min,
        MAX(vegetation) AS max,
-       AVG(vegetation) AS average
+       AVG(vegetation) AS avg
 FROM field_conditions;
 ```
 * A huge improvement could be the use of time series database (like InfluxDB or Prometheus), which are optimized for handling time series data, arrays of numbers indexed by time (a datetime or a datetime range). 

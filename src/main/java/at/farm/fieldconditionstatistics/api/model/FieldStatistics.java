@@ -13,8 +13,4 @@ public class FieldStatistics {
     public Vegetation getVegetation() {
         return vegetation;
     }
-
-    public void setVegetation(Vegetation vegetation) {
-        this.vegetation = vegetation;
-    }
 }

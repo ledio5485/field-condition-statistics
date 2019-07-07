@@ -6,11 +6,10 @@ import at.farm.fieldconditionstatistics.repository.Statistics;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
 @Service
-public class FieldConditionStatisticsService {
+public class FieldConditionStatisticsService implements SummaryStatistics {
     private final FieldConditionsRepository repository;
 
     public FieldConditionStatisticsService(@Qualifier("DBFieldConditionsRepository") FieldConditionsRepository repository) {
@@ -22,13 +21,7 @@ public class FieldConditionStatisticsService {
     }
 
     public Statistics getFieldStatistics(ZonedDateTime from, ZonedDateTime to) {
-        if (to == null) {
-            to = ZonedDateTime.now(ZoneOffset.UTC);
-        }
-        if (from == null) {
-            from = to.minusDays(30);
-        }
-        return repository.getStatistics(from, to);
+        return getStatistics(repository.filter(from, to));
     }
 
 }

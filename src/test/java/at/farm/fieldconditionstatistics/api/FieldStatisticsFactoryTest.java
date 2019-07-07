@@ -4,12 +4,13 @@ import at.farm.fieldconditionstatistics.api.model.FieldStatistics;
 import at.farm.fieldconditionstatistics.api.model.Vegetation;
 import at.farm.fieldconditionstatistics.repository.Statistics;
 import org.junit.Test;
+import org.modelmapper.ModelMapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class FieldStatisticsFactoryTest {
 
-    private final FieldStatisticsFactory sut = new FieldStatisticsFactory();
+    private final FieldStatisticsFactory sut = new FieldStatisticsFactory(new ModelMapper());
 
     @Test
     public void create() {

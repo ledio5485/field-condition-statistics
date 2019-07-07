@@ -5,7 +5,9 @@ import at.farm.fieldconditionstatistics.api.model.FieldStatistics;
 import at.farm.fieldconditionstatistics.service.FieldConditionStatisticsService;
 import org.springframework.stereotype.Component;
 
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.time.temporal.ValueRange;
 
 @Component
 public class FieldConditionStatisticsController implements FieldConditionStatisticsApi {
@@ -26,6 +28,12 @@ public class FieldConditionStatisticsController implements FieldConditionStatist
 
     @Override
     public FieldStatistics getFieldStatistics(ZonedDateTime from, ZonedDateTime to) {
+        if (to == null) {
+            to = ZonedDateTime.now(ZoneOffset.UTC);
+        }
+        if (from == null) {
+            from = to.minusDays(30);
+        }
         return fieldStatisticsFactory.create(fieldConditionStatisticsService.getFieldStatistics(from, to));
     }
 }

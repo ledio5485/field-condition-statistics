@@ -6,8 +6,8 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.DoubleSummaryStatistics;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 @Repository
 public class InMemoryFieldConditionsRepository implements FieldConditionsRepository {
@@ -19,13 +19,9 @@ public class InMemoryFieldConditionsRepository implements FieldConditionsReposit
     }
 
     @Override
-    public Statistics getStatistics(ZonedDateTime from, ZonedDateTime to) {
-        DoubleSummaryStatistics statistics = fieldConditionEntities.parallelStream()
-                .filter(isBetween(from, to))
-                .mapToDouble(FieldConditionsEntity::getVegetation)
-                .summaryStatistics();
-
-        return new Statistics(statistics.getMin(), statistics.getMax(), statistics.getAverage());
+    public Stream<FieldConditionsEntity> filter(ZonedDateTime from, ZonedDateTime to) {
+        return fieldConditionEntities.parallelStream()
+                .filter(isBetween(from, to));
     }
 
     private Predicate<FieldConditionsEntity> isBetween(ZonedDateTime from, ZonedDateTime to) {
