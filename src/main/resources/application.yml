@@ -1,0 +1,10 @@
+server:
+  servlet:
+    context-path: /${spring.application.name}
+  port: 8080
+
+spring:
+  application:
+    name: field-condition-statistics
+  profiles:
+    active: test
